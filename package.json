@@ -1,5 +1,6 @@
 {
   "name": "chat-app",
+  "type": "module",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -13,6 +14,9 @@
     "dotenv": "^16.4.7",
     "fastify": "^5.2.1",
     "mongoose": "^8.11.0"
-    
+  },
+  "devDependencies": {
+    "@types/dotenv": "^8.2.3",
+    "ts-node": "^10.9.2"
   }
 }
