@@ -4,7 +4,7 @@ import { AuthService } from "../services/auth.service";
 export class AuthController {
     static async register(req: FastifyRequest, reply: FastifyReply) {
         try {
-            const user = await AuthService.register(req.body as any);
+            const user = await AuthService.register( req.body as any);
             reply.code(201).send({ message: "کاربر ثبت شد!", user });
         } catch (error: any) {
             reply.code(400).send({ error: error.message });
