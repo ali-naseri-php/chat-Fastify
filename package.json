@@ -1,6 +1,5 @@
 {
   "name": "chat-app",
-  "type": "module",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -11,12 +10,16 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^5.1.1",
     "dotenv": "^16.4.7",
     "fastify": "^5.2.1",
+    "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.11.0"
   },
   "devDependencies": {
+    "@types/bcrypt": "^5.0.2",
     "@types/dotenv": "^8.2.3",
+    "@types/jsonwebtoken": "^9.0.9",
     "ts-node": "^10.9.2"
   }
 }
