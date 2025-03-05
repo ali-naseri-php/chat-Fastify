@@ -3,26 +3,29 @@ import jwt from "jsonwebtoken";
 import {AuthRepository} from "../repositories/auth.repository";
 import {IUser} from "../schemas/user.schema";
 import {JWT_SECRET} from "../../../config/jwt";
-import {checkEmailExists} from "../actions/checkEmailExists";
-import {checkIsEmail} from "../actions/checkIsEmail";
-import {checkIsPassword} from "../actions/checkIsPassword";
+import {checkEmailExistsAction} from "../actions/checkEmailExistsAction";
+import {checkIsEmailAction} from "../actions/checkIsEmailAction";
+import {checkIsPasswordAction} from "../actions/checkIsPasswordAction";
+import {tokenAction} from "../actions/tokenAction";
 
 export class AuthService {
     static async register(userData: IUser) {
 
-        checkEmailExists(userData.email)
+        checkEmailExistsAction(userData.email)
 
         userData.password = await bcrypt.hash(userData.password, 10);
-        return AuthRepository.createUser(userData);
+       const user=await AuthRepository.createUser(userData);
+        const token = await tokenAction(user._id.toString())
+        return{token,user }
     }
 
     static async login(email: string, password: string) {
-        const user = await checkIsEmail(email)
+        const user = await checkIsEmailAction(email)
 
-        checkIsPassword(password, user.password);
+        checkIsPasswordAction(password, user.password);
 
 
-        const token = jwt.sign({userId: user._id}, JWT_SECRET, {expiresIn: "120h"});
+        const token = await tokenAction(user._id.toString())
         return {token, user};
     }
 }

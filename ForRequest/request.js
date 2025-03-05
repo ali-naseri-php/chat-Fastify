@@ -2,8 +2,9 @@ const fetch = require('node-fetch'); // برای ارسال درخواست HTTP
 const url = 'http://localhost:8080/api/auth/login'; // آدرس سرور
 
 const data = {
-    email: 'alinaseri@gmail.com',
-    password: 'echo ali'
+    email: 'alinaseriiii@gmail.com',
+    password: 'echo test',
+    username: 'test 2 '
 };
 
 fetch(url, {
@@ -13,6 +14,9 @@ fetch(url, {
     },
     body: JSON.stringify(data)
 })
-    .then(response => response.json())
-    .then(data => console.log('✅ Response:', data))
+    .then(async response => {
+        const status = response.status; // دریافت استتوس کد
+        const jsonData = await response.json(); // دریافت محتوای پاسخ
+        console.log('✅ Response:', { status, ...jsonData });
+    })
     .catch(error => console.error('❌ Error:', error));

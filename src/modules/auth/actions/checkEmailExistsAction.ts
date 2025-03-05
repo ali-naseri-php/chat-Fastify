@@ -1,7 +1,7 @@
 import {UserModel} from "../schemas/user.schema";
 import {AuthRepository} from "../repositories/auth.repository";
 
-export async function checkEmailExists(email: string) {
+export async function checkEmailExistsAction(email: string) {
 
 
     const existingUser = await AuthRepository.findByEmail(email);
