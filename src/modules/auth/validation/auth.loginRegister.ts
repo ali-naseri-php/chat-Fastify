@@ -4,6 +4,6 @@ export const valid = {
             email: { type: "string", format: "email", minLength: 5 },
             password: { type: "string", minLength: 8 },
         },
-        required: ["email", "password"], // اینجا قرار می‌گیره
+        required: ["email", "password"],
     },
 };
