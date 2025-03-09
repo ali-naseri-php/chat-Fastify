@@ -2,13 +2,12 @@ import { FastifyRequest, FastifyReply } from "fastify";
 import { Schema } from "mongoose";
 import { userService } from "../services/user.service";
 import { CreateUserDTO, UpdateUserDTO } from "../dto/user.dto";
+import "../types/fastify";
 
 export async function updateUserController(request: FastifyRequest, reply: FastifyReply) {
     try {
-        const userId = request.user?.id;
-        if (!userId) {
-            return reply.status(401).send({ error: "توکن نامعتبر است" });
-        }
+        const userId = request.user._id;
+
 
         const updateData: UpdateUserDTO = request.body as UpdateUserDTO;
         const updatedUser = await userService.updateUser(userId, updateData);
@@ -25,7 +24,8 @@ export async function updateUserController(request: FastifyRequest, reply: Fasti
 }
 export async function createUserController(request: FastifyRequest, reply: FastifyReply) {
     try {
-        const userId = request.user?.id;
+
+        const userId = request.user._id;
         if (!userId) {
             return reply.status(401).send({ error: "توکن نامعتبر است" });
         }

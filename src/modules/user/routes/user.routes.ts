@@ -5,8 +5,8 @@ import {userValidation} from "../validation/user.validation";
 
 export async function userRoutes(fastify: FastifyInstance) {
 
-    fastify.post('/', { preValidation: verifyToken,schema:userValidation}, createUserController);
+    fastify.post('/', { preHandler: verifyToken,schema:userValidation}, createUserController);
 
 
-    fastify.put('/:userId', { preValidation: verifyToken,schema:userValidation}, updateUserController);
+    fastify.put('/:userId', { preHandler: verifyToken,schema:userValidation}, updateUserController);
 }

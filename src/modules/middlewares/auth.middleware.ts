@@ -1,5 +1,8 @@
-import { FastifyRequest, FastifyReply } from "fastify";
+import  { FastifyRequest, FastifyReply } from "fastify";
 import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
+import "../types/fastify";
+dotenv.config();
 
 export async function verifyToken(request: FastifyRequest, reply: FastifyReply) {
     const token = request.headers['authorization']?.split(' ')[1];
@@ -9,9 +12,9 @@ export async function verifyToken(request: FastifyRequest, reply: FastifyReply) 
     }
 
     try {
+        const decoded = jwt.verify(token, process.env.JWT_SECRET || "SECRET_KEY") as { _id: string };
 
-        const decoded = jwt.verify(token, "SECRET_KEY") as { id: string };
-        request.user = { id: decoded.id };
+        request.user={_id:decoded._id,}
         return;
     } catch (error) {
         return reply.status(401).send({ error: "دسترسی غیرمجاز: توکن معتبر نیست" });
