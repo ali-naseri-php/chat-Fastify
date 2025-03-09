@@ -1,5 +1,5 @@
 const fetch = require('node-fetch'); // برای ارسال درخواست HTTP
-const url = 'http://localhost:8080/api/auth/login'; // آدرس سرور
+const url = 'http://localhost:8080/api/user/'; // آدرس سرور
 
 const data = {
     email: 'alinaseriiii@gmail.com',

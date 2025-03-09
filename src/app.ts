@@ -4,6 +4,7 @@ import { authRoutes } from "./modules/auth/routes/auth.routes";
 import multipart from "@fastify/multipart";
 import { connectDB } from "./config/config.mongoose";
 import fastifyFormbody from "@fastify/formbody";
+import {userRoutes} from "./modules/user/routes/user.routes";
 
 dotenv.config();
 const fastify = Fastify();
@@ -23,6 +24,7 @@ const start = async () => {
         const port = parseInt(process.env.PORT ?? '3000');
 
         fastify.register(authRoutes ,{prefix:'/api/auth'});
+        fastify.register(userRoutes ,{prefix:'/api/user'});
 
         await fastify.listen({ port: port });
         console.log(`Server running on port ${port}`);

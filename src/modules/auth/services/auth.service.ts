@@ -1,7 +1,7 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import {AuthRepository} from "../repositories/auth.repository";
-import {IUser} from "../schemas/user.schema";
+import {IUser} from "../interfaces/user.interface";
 import {JWT_SECRET} from "../../../config/jwt";
 import {checkEmailExistsAction} from "../actions/checkEmailExistsAction";
 import {checkIsEmailAction} from "../actions/checkIsEmailAction";
@@ -14,18 +14,19 @@ export class AuthService {
         checkEmailExistsAction(userData.email)
 
         userData.password = await bcrypt.hash(userData.password, 10);
-       const user=await AuthRepository.createUser(userData);
-        const token = await tokenAction(user._id.toString())
-        return{token,user }
+        const user = await AuthRepository.createUser(userData);
+
+        const token = await tokenAction(user._id)
+        return {token, user}
     }
 
     static async login(email: string, password: string) {
-        const user = await checkIsEmailAction(email)
+        const user = await checkIsEmailAction(email) as IUser
+
 
         checkIsPasswordAction(password, user.password);
 
-
-        const token = await tokenAction(user._id.toString())
+        const token = await tokenAction(user._id)
         return {token, user};
     }
 }
