@@ -1,4 +1,5 @@
-import { UserModel, IUser } from "../schemas/user.schema";
+import { UserModel } from "../schemas/user.schema";
+import {IUser} from "../interfaces/user.interface";
 
 export class AuthRepository {
     static async createUser(userData: IUser) {

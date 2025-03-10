@@ -1,17 +1,16 @@
-import { FastifyRequest, FastifyReply } from "fastify";
+import {  FastifyReply } from "fastify";
 import { Schema } from "mongoose";
 import { userService } from "../services/user.service";
 import { CreateUserDTO, UpdateUserDTO } from "../dto/user.dto";
-import "../types/fastify";
+import {AuthRequest} from "../../request/auth.request";
+import {checkIsUser} from "../actions/checkIsUser";
 
-export async function updateUserController(request: FastifyRequest, reply: FastifyReply) {
+export async function updateUserController(request:AuthRequest , reply: FastifyReply) {
     try {
-        const userId = request.user._id;
 
-
+        const _id = await checkIsUser(request.user)
         const updateData: UpdateUserDTO = request.body as UpdateUserDTO;
-        const updatedUser = await userService.updateUser(userId, updateData);
-
+        const updatedUser = await userService.updateUser(_id, updateData);
         if (!updatedUser) {
             return reply.status(404).send({ error: "کاربر پیدا نشد" });
         }
@@ -22,18 +21,15 @@ export async function updateUserController(request: FastifyRequest, reply: Fasti
         reply.status(500).send({ error: "خطا در سرور" });
     }
 }
-export async function createUserController(request: FastifyRequest, reply: FastifyReply) {
+export async function createUserController(request: AuthRequest, reply: FastifyReply) {
     try {
 
-        const userId = request.user._id;
-        if (!userId) {
-            return reply.status(401).send({ error: "توکن نامعتبر است" });
-        }
 
+        const _id = await checkIsUser(request.user)
 
 
         const userData: CreateUserDTO = request.body as CreateUserDTO;
-        userData.userId = new Schema.Types.ObjectId(userId);
+        userData._id = new Schema.Types.ObjectId(_id);
 
         const user = await userService.createUser(userData);
 

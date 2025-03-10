@@ -1,6 +1,6 @@
 import {Schema, Types} from "mongoose";
 export interface CreateUserDTO {
-    userId: Schema.Types.ObjectId;
+    _id: Schema.Types.ObjectId;
     profilePicture?: string;
     bio?: string;
 }

@@ -1,12 +1,12 @@
-import {Schema, model, Document} from "mongoose";
-import {IUser} from "../interfaces/user.interface";
-
+import { Schema, model, models } from "mongoose";
+import { IUser } from "../interfaces/user.interface";
+import { v4 as uuidv4 } from "uuid"; // برای ساخت UUID
 
 const UserSchema = new Schema<IUser>({
-    userId: {
-        type: Schema.Types.ObjectId,
-        ref: "Auth",
-        required: true
+    _id: {
+        type: String,
+        required: true,
+        default: uuidv4, // از UUID به‌جای ObjectId استفاده می‌کنیم
     },
     profilePicture: {
         type: String,
@@ -24,4 +24,4 @@ const UserSchema = new Schema<IUser>({
     timestamps: true
 });
 
-export const UserModel = model<IUser>("User", UserSchema);
+export const UserModel = models.User || model<IUser>("User", UserSchema);

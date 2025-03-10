@@ -1,10 +1,10 @@
 import  { FastifyRequest, FastifyReply } from "fastify";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
-import "../types/fastify";
+import {AuthRequest} from "../request/auth.request";
 dotenv.config();
 
-export async function verifyToken(request: FastifyRequest, reply: FastifyReply) {
+export async function verifyToken(request: AuthRequest, reply: FastifyReply) {
     const token = request.headers['authorization']?.split(' ')[1];
 
     if (!token) {
