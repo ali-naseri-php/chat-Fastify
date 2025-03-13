@@ -4,14 +4,14 @@ const chatService = new ChatService();
 const onlineUsers: Map<string, any> = new Map();
 
 export async function chatController(connection: any, req: any): Promise<void> {
-    const userId: string = req.query.userId;
+    const _id: string = req.query._id;
 
-    if (!userId) {
+    if (!_id) {
         connection.socket.close();
         return;
     }
 
-    onlineUsers.set(userId, connection);
+    onlineUsers.set(_id, connection);
 
     connection.socket.on("message", async (message: string) => {
         try {
@@ -27,6 +27,6 @@ export async function chatController(connection: any, req: any): Promise<void> {
     });
 
     connection.socket.on("close", () => {
-        onlineUsers.delete(userId);
+        onlineUsers.delete(_id);
     });
 }

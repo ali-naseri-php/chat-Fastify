@@ -7,7 +7,7 @@ export class ChatRepository {
         return await new ChatMessage(message).save();
     }
 
-    async getMessagesForUser(userId: string): Promise<IChatMessage[]> {
-        return await ChatMessage.find({ $or: [{ senderId: userId }, { receiverId: userId }] }).sort({ timestamp: -1 });
+    async getMessagesForUser(_id: string): Promise<IChatMessage[]> {
+        return await ChatMessage.find({ $or: [{ senderId: _id }, { receiverId: _id }] }).sort({ timestamp: -1 });
     }
 }

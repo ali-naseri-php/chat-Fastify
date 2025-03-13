@@ -8,7 +8,7 @@ export class ChatService {
         return await this.chatRepository.saveMessage(data);
     }
 
-    async getUserMessages(userId: string): Promise<IChatMessage[]> {
-        return await this.chatRepository.getMessagesForUser(userId);
+    async getUserMessages(_id: string): Promise<IChatMessage[]> {
+        return await this.chatRepository.getMessagesForUser(_id);
     }
 }
