@@ -19,7 +19,7 @@ export class WebSocketController {
             const data = JSON.parse(message.toString());
 
             if (data.event === "user-login") {
-                this.userService.addUser(data.userId, connection.socket);
+                this.userService.addUser(data._id, connection.socket);
                 this.broadcastOnlineUsers();
             }
 
